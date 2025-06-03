@@ -1,7 +1,13 @@
 import {View, Text, TouchableOpacity, Pressable} from 'react-native';
 import {ArrowRight2, MinusCirlce, People} from 'iconsax-react-nativejs';
+import {useEffect} from 'react';
+import {getPersons} from '../db/persons/getPersons';
 
 const GroupItem = ({data, showEdit, deleteData}) => {
+  useEffect(() => {
+    getPersons(data?.id);
+  }, []);
+
   return (
     <Pressable className="bg-white flex-1 flex-row gap-2 p-4 rounded-xl mb-2.5">
       {showEdit && (
