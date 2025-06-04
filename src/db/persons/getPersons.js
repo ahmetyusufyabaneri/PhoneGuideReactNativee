@@ -1,11 +1,11 @@
 import {db} from '../config';
 
-export const getPersons = group_id => {
+export const getPersonsCount = (group_id, setPersonsCount, setPersons) => {
   db.transaction(txn => {
     txn.executeSql(
       `SELECT * FROM persons JOIN groups ON persons.group_id = groups.id 
-       WHERE groups.id = ${group_id};`,
-      [],
+       WHERE groups.id = ?;`,
+      [group_id],
       (sqlTxn, results) => {
         let data = [];
 
@@ -15,6 +15,8 @@ export const getPersons = group_id => {
             data.push(item);
           }
         }
+
+        setPersonsCount(results?.rows?.length);
       },
       error => console.log(error),
     );
